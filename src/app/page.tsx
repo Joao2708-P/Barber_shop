@@ -7,20 +7,26 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [Issticky, setSticky] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-useEffect(() => {
-  if (typeof window !== "undefined") {
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    
     const handleScroll = () => {
       setSticky(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }
-}, []);
+  }, [isMounted]);
 
   return (
     <div className={styles.page}>

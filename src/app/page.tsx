@@ -11,21 +11,16 @@ export default function Home() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  useEffect(() => {
+useEffect(() => {
+  if (typeof window !== "undefined") {
     const handleScroll = () => {
-      if(window.scrollY > 0) {
-        setSticky(true);
-      }
-      else {
-        setSticky(false);
-      }
+      setSticky(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
-    
-  }, [])
+  }
+}, []);
 
   return (
     <div className={styles.page}>

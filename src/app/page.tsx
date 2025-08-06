@@ -6,32 +6,30 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [Issticky, setSticky] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isMounted) return;
-    
+    // Garante que o código só executa no cliente
     const handleScroll = () => {
-      setSticky(window.scrollY > 0);
+      setIsSticky(window.scrollY > 0);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMounted]);
+    // Adiciona o event listener apenas após o componente montar
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Array vazio garante que execute apenas uma vez após montar
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <header className={`${styles.header} ${Issticky ? styles.sticky : ''}`}>
+        <header className={`${styles.header} ${isSticky ? styles.sticky : ''}`}>
           <div className={styles.logo}>
             <Image src="/Logo_barber_shop.png" alt="Logo" width={100} height={100} />
             <h1>Almeida</h1>

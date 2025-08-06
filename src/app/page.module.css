@@ -17,6 +17,11 @@
   background-color: #000;
 }
 
+.sticky-header {
+  padding: 5px 50px;
+  background-color: #000;
+}
+
 .header .logo {
   display: flex;
   margin: 0 10px;

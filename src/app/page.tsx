@@ -22,15 +22,9 @@ export default function Home() {
 
     window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    }
+    return () => window.removeEventListener("scroll", handleScroll);
+    
   }, [])
-
-  window.addEventListener("scroll", function() {
-    var header = this.document.querySelector("header")
-    header?.classList.toggle("sticky", this.window.scrollY > 0)
-  })
 
   return (
     <div className={styles.page}>
